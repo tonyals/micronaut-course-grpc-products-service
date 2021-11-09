@@ -1,0 +1,6 @@
+applicationType: grpc
+defaultPackage: br.com.tony
+testFramework: junit
+sourceLanguage: kotlin
+buildTool: gradle_kotlin
+features: [annotation-api, app-name, data, data-jpa, gradle, grpc, h2, jdbc-hikari, junit, kotlin, kotlin-application, logback, readme, shade, yaml]

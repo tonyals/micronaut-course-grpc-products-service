@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "br.com.tony";
+option java_outer_classname = "ProductsService";
+option objc_class_prefix = "HLW";
+
+package br.com.tony;
+
+service ProductsServiceService {
+  rpc send (ProductsServiceRequest) returns (ProductsServiceReply) {}
+}
+
+message ProductsServiceRequest {
+  string name = 1;
+}
+
+message ProductsServiceReply {
+  string message = 1;
+}
