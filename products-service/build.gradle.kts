@@ -42,7 +42,7 @@ dependencies {
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.0")
 
     testImplementation("io.micronaut:micronaut-http-client:3.1.3")
-
+    testImplementation("org.mockito:mockito-core:4.0.0")
 }
 
 
