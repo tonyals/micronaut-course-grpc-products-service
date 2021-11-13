@@ -9,7 +9,7 @@ class ValidationUtil {
                 if (it.name.isNullOrBlank())
                     throw IllegalArgumentException("Nome não pode ser nulo ou vazio")
 
-                if (it.price.isNaN())
+                if (it.price.isNaN() || it.price < 0)
                     throw IllegalArgumentException("Preço precisa ser um valor válido")
                 return it
             }
