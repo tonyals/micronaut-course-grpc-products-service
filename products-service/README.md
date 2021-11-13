@@ -1,12 +1,28 @@
-## Micronaut 3.1.3 Documentation
+## Repositório do curso [Micronaut e gRPC - Crie um projeto do zero com gRPC e Kotlin](https://www.udemy.com/course/micronaut-e-grpc-crie-um-projeto-do-zero-com-grpc-e-kotlin/?referralCode=B0511367F040D62EBBEB)
 
-- [User Guide](https://docs.micronaut.io/3.1.3/guide/index.html)
-- [API Reference](https://docs.micronaut.io/3.1.3/api/index.html)
-- [Configuration Reference](https://docs.micronaut.io/3.1.3/guide/configurationreference.html)
-- [Micronaut Guides](https://guides.micronaut.io/index.html)
----
+Este repositório possui o código desenvolvido durante o curso [Micronaut e gRPC - Crie um projeto do zero com gRPC e Kotlin](https://www.udemy.com/course/micronaut-e-grpc-crie-um-projeto-do-zero-com-grpc-e-kotlin/?referralCode=B0511367F040D62EBBEB).
 
-## Feature jdbc-hikari documentation
+<img src="./img/course-apresentation.png" alt="Apresentação do curso"/>
 
-- [Micronaut Hikari JDBC Connection Pool documentation](https://micronaut-projects.github.io/micronaut-sql/latest/guide/index.html#jdbc)
+
+## Stack
+- Micronaut gRPC 3.1;
+- Protocol Buffers;
+- Kotlin 1.5;
+- JUnit 5;
+- Mockito.
+
+## O que vamos aprender?
+- O que é RPC;
+- O que é gRPC;
+- O que é Protocol Buffers e arquivos .proto;
+- Pontos importantes sobre alteração de arquivos .proto e impactos nas comunicações;
+- Implementar serviços gRPC para criar, atualizar, buscar e deletar produtos;
+- Testes integrados dos enpoints de serviços gRPC implementados;
+- Testes unitários das camadas de regra de negócio e validações.
+
+
+## Estrutura do projeto desenvolvido
+
+<img src="./img/project.png" alt="Estrutura do projeto"/>
 
