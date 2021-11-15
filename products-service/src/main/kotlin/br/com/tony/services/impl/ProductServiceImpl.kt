@@ -3,6 +3,7 @@ package br.com.tony.services.impl
 import br.com.tony.dto.ProductReq
 import br.com.tony.dto.ProductRes
 import br.com.tony.exceptions.AlreadyExistsException
+import br.com.tony.exceptions.ProductNotFoundException
 import br.com.tony.repository.ProductRepository
 import br.com.tony.services.ProductService
 import br.com.tony.util.toDomain
@@ -15,6 +16,12 @@ class ProductServiceImpl(private val productRepository: ProductRepository) : Pro
         verifyName(req.name)
         val productSaved = productRepository.save(req.toDomain())
         return productSaved.toProductRes()
+    }
+
+    override fun findById(id: Long): ProductRes {
+        val findById = productRepository.findById(id)
+        findById.orElseThrow { ProductNotFoundException(id) }
+        return findById.get().toProductRes()
     }
 
     private fun verifyName(name: String) {
