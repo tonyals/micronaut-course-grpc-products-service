@@ -10,9 +10,14 @@ service ProductsService {
   rpc FindById (RequestById) returns (ProductServiceResponse) {}
   rpc Update (ProductServiceUpdateRequest) returns (ProductServiceResponse) {}
   rpc Delete (RequestById) returns (Empty) {}
+  rpc FindAll (Empty) returns (ProductsList) {}
 }
 
 message Empty {}
+
+message ProductsList {
+  repeated ProductServiceResponse products = 1;
+}
 
 message RequestById {
   int64 id = 1;
