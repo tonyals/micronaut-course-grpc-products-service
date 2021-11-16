@@ -36,11 +36,12 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
     runtimeOnly("ch.qos.logback:logback-classic:1.2.6")
-    runtimeOnly("com.h2database:h2:1.4.200")
+    runtimeOnly("org.postgresql:postgresql:42.3.1")
     implementation("io.micronaut:micronaut-validation:3.1.3")
 
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.0")
 
+    testRuntimeOnly("com.h2database:h2:1.4.200")
     testImplementation("io.micronaut:micronaut-http-client:3.1.3")
     testImplementation("org.mockito:mockito-core:4.0.0")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
