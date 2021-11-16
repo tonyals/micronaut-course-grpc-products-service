@@ -1,6 +1,7 @@
 package br.com.tony.util
 
 import br.com.tony.ProductServiceRequest
+import br.com.tony.exceptions.InvalidArgumentException
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
@@ -27,7 +28,7 @@ class ValidationUtilTest {
             .setQuantityInStock(10)
             .build()
 
-        Assertions.assertThrowsExactly(IllegalArgumentException::class.java) {
+        Assertions.assertThrowsExactly(InvalidArgumentException::class.java) {
             ValidationUtil.validatePayload(request)
         }
     }
@@ -40,14 +41,14 @@ class ValidationUtilTest {
             .setQuantityInStock(10)
             .build()
 
-        Assertions.assertThrowsExactly(IllegalArgumentException::class.java) {
+        Assertions.assertThrowsExactly(InvalidArgumentException::class.java) {
             ValidationUtil.validatePayload(request)
         }
     }
 
     @Test
     fun `when validatePayload method is call with null payload, should throw exception`() {
-        Assertions.assertThrowsExactly(IllegalArgumentException::class.java) {
+        Assertions.assertThrowsExactly(InvalidArgumentException::class.java) {
             ValidationUtil.validatePayload(null)
         }
     }
