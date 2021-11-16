@@ -6,6 +6,7 @@ import br.com.tony.dto.ProductUpdateReq
 import br.com.tony.exceptions.BaseBusinessException
 import br.com.tony.services.ProductService
 import br.com.tony.util.ValidationUtil
+import io.grpc.Status
 import io.grpc.stub.StreamObserver
 import io.micronaut.grpc.annotation.GrpcService
 
@@ -30,6 +31,9 @@ class ProductResources(private val productService: ProductService) : ProductsSer
             responseObserver?.onError(ex.statusCode().toStatus()
                 .withDescription(ex.errorMessage()).asRuntimeException()
             )
+        } catch (ex: Throwable) {
+            responseObserver?.onError(Status.UNKNOWN.code.toStatus()
+                .withDescription("Internal Server Error").asException())
         }
     }
 
@@ -49,6 +53,9 @@ class ProductResources(private val productService: ProductService) : ProductsSer
             responseObserver?.onError(ex.statusCode().toStatus()
                 .withDescription(ex.errorMessage()).asRuntimeException()
             )
+        } catch (ex: Throwable) {
+            responseObserver?.onError(Status.UNKNOWN.code.toStatus()
+                .withDescription("Internal Server Error").asException())
         }
     }
 
@@ -78,6 +85,9 @@ class ProductResources(private val productService: ProductService) : ProductsSer
             responseObserver?.onError(ex.statusCode().toStatus()
                 .withDescription(ex.errorMessage()).asRuntimeException()
             )
+        } catch (ex: Throwable) {
+            responseObserver?.onError(Status.UNKNOWN.code.toStatus()
+                .withDescription("Internal Server Error").asException())
         }
     }
 
@@ -90,25 +100,33 @@ class ProductResources(private val productService: ProductService) : ProductsSer
             responseObserver?.onError(ex.statusCode().toStatus()
                 .withDescription(ex.errorMessage()).asRuntimeException()
             )
+        } catch (ex: Throwable) {
+            responseObserver?.onError(Status.UNKNOWN.code.toStatus()
+                .withDescription("Internal Server Error").asException())
         }
     }
 
     override fun findAll(request: Empty?, responseObserver: StreamObserver<ProductsList>?) {
-        val productResList = productService.findAll()
-        val productServiceResponseList = productResList.map {
-            ProductServiceResponse.newBuilder()
-                .setId(it.id)
-                .setName(it.name)
-                .setPrice(it.price)
-                .setQuantityInStock(it.quantityInStock)
+        try {
+            val productResList = productService.findAll()
+            val productServiceResponseList = productResList.map {
+                ProductServiceResponse.newBuilder()
+                    .setId(it.id)
+                    .setName(it.name)
+                    .setPrice(it.price)
+                    .setQuantityInStock(it.quantityInStock)
+                    .build()
+            }
+
+            val response = ProductsList.newBuilder()
+                .addAllProducts(productServiceResponseList)
                 .build()
+
+            responseObserver?.onNext(response)
+            responseObserver?.onCompleted()
+        } catch (ex: Throwable) {
+            responseObserver?.onError(Status.UNKNOWN.code.toStatus()
+                .withDescription("Internal Server Error").asException())
         }
-
-        val response = ProductsList.newBuilder()
-            .addAllProducts(productServiceResponseList)
-            .build()
-
-        responseObserver?.onNext(response)
-        responseObserver?.onCompleted()
     }
 }
