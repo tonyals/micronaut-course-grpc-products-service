@@ -8,6 +8,7 @@ package br.com.tony;
 service ProductsService {
   rpc Create (ProductServiceRequest) returns (ProductServiceResponse) {}
   rpc FindById (FindByIdServiceRequest) returns (ProductServiceResponse) {}
+  rpc Update (ProductServiceUpdateRequest) returns (ProductServiceResponse) {}
 }
 
 message FindByIdServiceRequest {
@@ -21,6 +22,13 @@ message ProductServiceRequest {
 }
 
 message ProductServiceResponse {
+  int64 id = 1;
+  string name = 2;
+  double price = 3;
+  int32 quantity_in_stock = 4;
+}
+
+message ProductServiceUpdateRequest {
   int64 id = 1;
   string name = 2;
   double price = 3;
