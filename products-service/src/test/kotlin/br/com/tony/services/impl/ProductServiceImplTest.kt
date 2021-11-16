@@ -2,6 +2,7 @@ package br.com.tony.services.impl
 
 import br.com.tony.domain.Product
 import br.com.tony.dto.ProductReq
+import br.com.tony.dto.ProductUpdateReq
 import br.com.tony.exceptions.AlreadyExistsException
 import br.com.tony.exceptions.ProductNotFoundException
 import br.com.tony.repository.ProductRepository
@@ -62,5 +63,42 @@ internal class ProductServiceImplTest {
     fun `when findById method is call with invalid id, throws ProductNotFoundException`() {
         val id = 1L
         assertThrowsExactly(ProductNotFoundException::class.java) { productService.findById(id) }
+    }
+
+    @Test
+    fun `when update method is call with duplicated product-name, throws AlreadyExistsException`() {
+        val productInput = Product(id = null, name = "product name", price = 10.00, quantityInStock = 5)
+        val productOutput = Product(id = 1, name = "product name", price = 10.00, quantityInStock = 5)
+
+        `when`(productRepository.findByNameIgnoreCase(productInput.name))
+            .thenReturn(productOutput)
+
+        val productReq = ProductUpdateReq(id = 1, name = "product name", price = 10.00, quantityInStock = 5)
+
+        assertThrowsExactly(AlreadyExistsException::class.java) { productService.update(productReq) }
+    }
+
+    @Test
+    fun `when update method is call with invalid id, throws ProductNotFoundException`() {
+        val productReq = ProductUpdateReq(id = 1, name = "product name", price = 10.00, quantityInStock = 5)
+        assertThrowsExactly(ProductNotFoundException::class.java) { productService.update(productReq) }
+    }
+
+    @Test
+    fun `when update method is call with valid data a ProductRes is returned`() {
+        val productInput = Product(id = 1, name = "updated product", price = 11.00, quantityInStock = 10)
+        val findByIdOutput = Product(id = 1, name = "product name", price = 10.00, quantityInStock = 5)
+
+        `when`(productRepository.findById(productInput.id!!))
+            .thenReturn(Optional.of(findByIdOutput))
+
+        `when`(productRepository.update(productInput))
+            .thenReturn(productInput)
+
+        val productReq = ProductUpdateReq(id = 1, name = "updated product", price = 11.00, quantityInStock = 10)
+
+        val productRes = productService.update(productReq)
+
+        assertEquals(productReq.name, productRes.name)
     }
 }
