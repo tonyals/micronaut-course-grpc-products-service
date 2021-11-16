@@ -8,8 +8,8 @@ import io.grpc.Status
 import io.grpc.StatusRuntimeException
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import org.flywaydb.core.Flyway
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -132,6 +132,33 @@ internal class ProductResourcesTestIT(
 
         val response = assertThrows(StatusRuntimeException::class.java) {
             productsServiceBlockingStub.update(request)
+        }
+
+        assertEquals(Status.NOT_FOUND.code, response.status.code)
+        assertEquals(description, response.status.description)
+    }
+
+    @Test
+    fun `when ProductsServiceGrpc delete method is call with valid id a success is returned`() {
+        val request = RequestById.newBuilder()
+            .setId(1L)
+            .build()
+
+        assertDoesNotThrow {
+            productsServiceBlockingStub.delete(request)
+        }
+    }
+
+    @Test
+    fun `when ProductsServiceGrpc delete method is call with invalid id a ProductNotFound is returned`() {
+        val request = RequestById.newBuilder()
+            .setId(10L)
+            .build()
+
+        val description = "Produto com ID ${request.id} não encontrado."
+
+        val response = assertThrows(StatusRuntimeException::class.java) {
+            productsServiceBlockingStub.delete(request)
         }
 
         assertEquals(Status.NOT_FOUND.code, response.status.code)
