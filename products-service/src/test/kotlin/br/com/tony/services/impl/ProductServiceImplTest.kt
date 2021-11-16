@@ -2,6 +2,7 @@ package br.com.tony.services.impl
 
 import br.com.tony.domain.Product
 import br.com.tony.dto.ProductReq
+import br.com.tony.dto.ProductRes
 import br.com.tony.dto.ProductUpdateReq
 import br.com.tony.exceptions.AlreadyExistsException
 import br.com.tony.exceptions.ProductNotFoundException
@@ -124,5 +125,31 @@ internal class ProductServiceImplTest {
         assertThrowsExactly(ProductNotFoundException::class.java) {
             productService.delete(id)
         }
+    }
+
+    @Test
+    fun `when findAll method is call a list of ProductRes is returned`() {
+        val productsList = listOf(
+            Product(id = 1, name = "product name", price = 10.00, quantityInStock = 5)
+        )
+
+        `when`(productRepository.findAll())
+            .thenReturn(productsList)
+
+        val productRes = productService.findAll()
+
+        assertEquals(productsList[0].name, productRes[0].name)
+    }
+
+    @Test
+    fun `when findAll method is call without products a emptyList of ProductRes is returned`() {
+        val productsList = emptyList<ProductRes>()
+
+        `when`(productRepository.findAll())
+            .thenReturn(emptyList())
+
+        val productRes = productService.findAll()
+
+        assertEquals(productsList.size, productRes.size)
     }
 }

@@ -44,6 +44,11 @@ class ProductServiceImpl(private val productRepository: ProductRepository) : Pro
         productRepository.delete(product)
     }
 
+    override fun findAll(): List<ProductRes> {
+        val findAll = productRepository.findAll()
+        return findAll.map { it.toProductRes() }
+    }
+
     private fun verifyName(name: String) {
         productRepository.findByNameIgnoreCase(name)?.let {
             throw AlreadyExistsException(name)
