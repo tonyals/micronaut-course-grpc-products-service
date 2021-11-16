@@ -1,14 +1,10 @@
 package br.com.tony.resources
 
-import br.com.tony.ProductServiceRequest
-import br.com.tony.ProductServiceUpdateRequest
-import br.com.tony.ProductsServiceGrpc
-import br.com.tony.RequestById
+import br.com.tony.*
 import io.grpc.Status
 import io.grpc.StatusRuntimeException
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import org.flywaydb.core.Flyway
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -163,5 +159,15 @@ internal class ProductResourcesTestIT(
 
         assertEquals(Status.NOT_FOUND.code, response.status.code)
         assertEquals(description, response.status.description)
+    }
+
+    @Test
+    fun `when ProductsServiceGrpc findAll method is call a list of ProductServiceResponse is returned`() {
+        val request = Empty.newBuilder().build()
+
+        val response = productsServiceBlockingStub.findAll(request)
+
+        assertEquals("Product A", response.getProducts(0).name)
+        assertEquals("Product B", response.getProducts(1).name)
     }
 }
