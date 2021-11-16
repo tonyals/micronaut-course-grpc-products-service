@@ -1,9 +1,9 @@
 package br.com.tony.resources
 
-import br.com.tony.FindByIdServiceRequest
 import br.com.tony.ProductServiceRequest
 import br.com.tony.ProductServiceUpdateRequest
 import br.com.tony.ProductsServiceGrpc
+import br.com.tony.RequestById
 import io.grpc.Status
 import io.grpc.StatusRuntimeException
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
@@ -59,7 +59,7 @@ internal class ProductResourcesTestIT(
 
     @Test
     fun `when ProductsServiceGrpc findById method is call with valid id a success is returned`() {
-        val request = FindByIdServiceRequest.newBuilder()
+        val request = RequestById.newBuilder()
             .setId(1)
             .build()
 
@@ -71,7 +71,7 @@ internal class ProductResourcesTestIT(
 
     @Test
     fun `when ProductsServiceGrpc findById method is call with invalid id a ProductNotFound is returned`() {
-        val request = FindByIdServiceRequest.newBuilder()
+        val request = RequestById.newBuilder()
             .setId(10)
             .build()
 

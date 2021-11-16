@@ -33,7 +33,7 @@ class ProductResources(private val productService: ProductService) : ProductsSer
         }
     }
 
-    override fun findById(request: FindByIdServiceRequest?, responseObserver: StreamObserver<ProductServiceResponse>?) {
+    override fun findById(request: RequestById?, responseObserver: StreamObserver<ProductServiceResponse>?) {
         try {
             val productRes = productService.findById(request!!.id)
             val productResponse = ProductServiceResponse.newBuilder()
